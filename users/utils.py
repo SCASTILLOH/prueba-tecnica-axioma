@@ -1,20 +1,50 @@
 from .models import UserAccount
 from rut_chile import rut_chile
+from .models import *
+from django.utils import timezone
+from django.db.models.functions import Coalesce
+from django.db.models import Sum
 
 import re
 
 
-class CalculadorSaldo:
-    def __init__(self, rut):
-        self.rut = rut
+def format_number(text):
+    return '{:,}'.format(text).replace(',', '.')
 
-    def calcula_saldo(self):
-        cuenta = UserAccount.objects.filter(rut=self.rut).first()
-        suma_cargos = Cargos.objects.filter(cuenta=cuenta).aggregate(
-            total=models.Sum('monto'))['total']
 
-        print('cuenta: ', cuenta)
-        print('suma_cargos ', suma_cargos)
+def calcula_saldo(rut):
+    user_data = UserAccount.objects.filter(rut=rut).first()
+
+    total_abonos_sin_ret = Abonos.objects.filter(cuenta=user_data, retencion=False).aggregate(
+        total=Coalesce(Sum('monto'), 0))['total']
+
+    total_abonos_con_ret = Abonos.objects.filter(cuenta=user_data, retencion=True).aggregate(
+        total=Coalesce(Sum('monto'), 0))['total']
+
+    total_cargos = Cargos.objects.filter(cuenta=user_data).aggregate(
+        total=Coalesce(Sum('monto'), 0))['total']
+
+    total_abonos = total_abonos_sin_ret + total_abonos_con_ret
+
+    saldo_inicial = user_data.saldo_inicial
+
+    saldo_contable = saldo_inicial + total_abonos_sin_ret - total_cargos
+
+    saldo_disponible = saldo_inicial + total_abonos - \
+        total_abonos_con_ret - total_cargos
+
+    context = {
+        'user': user_data,
+        'total_abonos': total_abonos,
+        'total_abonos_con_ret': total_abonos_con_ret,
+        'total_cargos': total_cargos,
+        'saldo_linea_credito': user_data.saldo_linea_credito,
+        'saldo_disponible': saldo_disponible,
+        'saldo_contable': saldo_contable,
+        'sobregirado': bool(saldo_disponible < 0),
+    }
+
+    return context
 
 
 def valida_rut_chile(rut):

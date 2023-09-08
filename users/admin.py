@@ -3,8 +3,26 @@ from .models import *
 from .forms import *
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .utils import calcula_saldo
 
 admin.site.unregister(Group)
+
+
+def procesa_saldos(element):
+    """
+    element == obj, esto para evitar maximum recursion depth
+    """
+    obj = element
+
+    # procesa saldo segun cargos y abonos
+    data = calcula_saldo(obj.rut)
+
+    # actualiza obj userAccount
+    obj.saldo_disponible = data['saldo_disponible']
+    obj.saldo_contable = data['saldo_contable']
+    obj.save()
+
+    return obj
 
 
 class CargosInline(admin.TabularInline):
@@ -30,7 +48,7 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Información Personal', {'fields': ('nombres', 'apellidos')}),
         ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Información de Cuenta', {'fields': (
-            'numero_cuenta', 'saldo_contable', 'saldo_disponible',
+            'numero_cuenta', 'saldo_inicial', 'saldo_contable', 'saldo_disponible',
             'saldo_linea_credito', 'estado', 'intentos_fallidos')}),
     )
     add_fieldsets = (
@@ -50,22 +68,20 @@ class CustomUserAdmin(BaseUserAdmin):
         return super().change_view(request, object_id, form_url, extra_context)
 
     def add_view(self, request, form_url='', extra_context=None):
-        self.inlines = []  # Oculta los inlines en la vista de edición (change)
+        self.inlines = []
         return super().add_view(request, form_url, extra_context)
-        # Muestra los inlines solo en la vista de añadir (add)
 
-    def save_model(self, request, obj, form, change):
-        # Guardar el objeto CustomUser
-        super().save_model(request, obj, form, change)
+    def response_add(self, request, new_object):
+        obj = procesa_saldos(new_object)
+        return super(CustomUserAdmin, self).response_add(request, obj)
 
-        # Guardar los objetos relacionados Cargos y Abonos
-        for cargo in obj.cargos_set.all():
-            cargo.cuenta = obj  # Asigna el usuario actual
-            cargo.save()
+    def response_change(self, request, obj):
+        obj = procesa_saldos(obj)
+        return super(CustomUserAdmin, self).response_change(request, obj)
 
-        for abono in obj.abonos_set.all():
-            abono.cuenta = obj  # Asigna el usuario actual
-            abono.save()
+    def calcula_suma_items_tabular(self, obj):
+        obj = procesa_saldos(obj)
+        return obj
 
     def get_readonly_fields(self, request, obj=None):
         if obj:

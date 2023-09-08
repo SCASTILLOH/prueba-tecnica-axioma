@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models.functions import Coalesce
 from django.db.models import Sum
+from django.contrib.admin.sites import AdminSite
 
 
 CHOICES_ESTADO = (('activo', 'Activo'), ('bloqueado', 'Bloqueado'))
@@ -61,6 +62,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     apellidos = models.CharField(max_length=255)
     email = models.EmailField(unique=True, max_length=255)
     numero_cuenta = models.CharField(unique=True, max_length=10)
+    saldo_inicial = models.IntegerField(default=0)
     saldo_contable = models.IntegerField(default=0)
     saldo_disponible = models.IntegerField(default=0)
     saldo_linea_credito = models.IntegerField(default=0)

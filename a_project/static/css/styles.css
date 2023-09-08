@@ -417,4 +417,8 @@ footer .footer-details div {
 
 a {
   text-decoration: none;
+}
+
+.text-red {
+  color: red !important;
 }/*# sourceMappingURL=styles.css.map */

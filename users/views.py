@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.db.models.functions import Coalesce
 from django.db.models import Sum
 from .forms import LoginForm
+from datetime import datetime
+from .utils import format_number
 
 
 def login_view(request):
@@ -56,23 +58,35 @@ def login_view(request):
 
 @login_required(login_url='/login/')
 def home_view(request):
+
     user_data = UserAccount.objects.filter(rut=request.user.rut).first()
 
-    total_abonos = Abonos.objects.filter(cuenta=user_data).aggregate(
+    total_abonos_sin_ret = Abonos.objects.filter(cuenta=user_data, retencion=False).aggregate(
+        total=Coalesce(Sum('monto'), 0))['total']
+
+    total_abonos_con_ret = Abonos.objects.filter(cuenta=user_data, retencion=True).aggregate(
         total=Coalesce(Sum('monto'), 0))['total']
 
     total_cargos = Cargos.objects.filter(cuenta=user_data).aggregate(
-        total=models.Sum('monto'))['total']
+        total=Coalesce(Sum('monto'), 0))['total']
 
-    def format_number(text):
-        return '{:,}'.format(text).replace(',', '.')
+    total_abonos = total_abonos_sin_ret + total_abonos_con_ret
+
+    saldo_inicial = user_data.saldo_inicial
+
+    fecha_actual = datetime.now()
+    fecha_formateada = fecha_actual.strftime("%d/%m/%Y %H:%Mhrs")
 
     context = {
         'user': user_data,
+        'fecha': fecha_formateada,
         'total_abonos': format_number(total_abonos),
+        'total_abonos_con_ret': format_number(total_abonos_con_ret),
         'total_cargos': format_number(total_cargos),
+        'saldo_linea_credito': format_number(user_data.saldo_linea_credito),
         'saldo_disponible': format_number(user_data.saldo_disponible),
         'saldo_contable': format_number(user_data.saldo_contable),
+        'sobregirado': bool(user_data.saldo_disponible < 0),
     }
 
     return render(request, 'home.html', context)
