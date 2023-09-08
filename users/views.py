@@ -20,15 +20,6 @@ def login_view(request):
             rut = form.cleaned_data['rut']
             password = form.cleaned_data['password']
 
-            # if not rut or not password:
-            #     if not rut:
-            #         messages.error(
-            #             request, 'El campo Rut no puede estar vacío')
-            #     if not password:
-            #         messages.error(
-            #             request, 'El campo Contraseña no puede estar vacío')
-            #     return render(request, 'login.html')
-
             user = authenticate(request, rut=rut, password=password)
 
             if user and user.estado == 'bloqueado':
