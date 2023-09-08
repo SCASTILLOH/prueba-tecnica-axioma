@@ -40,9 +40,9 @@ class CustomUserAdmin(BaseUserAdmin):
 
     form = UserChangeForm
     add_form = UserAddForm
-    list_display = ('rut', 'email', 'nombres',
-                    'apellidos', 'is_active', 'is_staff')
-    list_filter = ('is_active', 'is_staff')
+    list_display = ('rut', 'numero_cuenta', 'email', 'nombres',
+                    'apellidos', 'estado', 'saldo_disponible')
+    list_filter = ('is_active', 'is_staff', 'estado')
     fieldsets = (
         (None, {'fields': ('rut', 'email', 'password')}),
         ('Información Personal', {'fields': ('nombres', 'apellidos')}),
@@ -59,7 +59,7 @@ class CustomUserAdmin(BaseUserAdmin):
                        ),
         }),
     )
-    search_fields = ('email',)
+    search_fields = ('email', 'numero_cuenta')
     ordering = ('email',)
     horizontal = ()
 

@@ -28,12 +28,11 @@ def calcula_saldo(rut):
 
     saldo_inicial = user_data.saldo_inicial
 
-    saldo_contable = saldo_inicial + total_abonos_sin_ret - total_cargos
+    saldo_disponible = saldo_inicial + total_abonos_sin_ret - total_cargos
 
-    saldo_disponible = saldo_inicial + total_abonos - \
-        total_abonos_con_ret - total_cargos
+    saldo_contable = saldo_disponible + total_abonos_con_ret
 
-    context = {
+    data_response = {
         'user': user_data,
         'total_abonos': total_abonos,
         'total_abonos_con_ret': total_abonos_con_ret,
@@ -44,7 +43,7 @@ def calcula_saldo(rut):
         'sobregirado': bool(saldo_disponible < 0),
     }
 
-    return context
+    return data_response
 
 
 def valida_rut_chile(rut):
