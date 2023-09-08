@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>Bienvenido {{user}}</div>
+<div>
+  <span>Saldo disponible: {{saldo_disponible}}</span>
+  <span>Total Cargos: {{total_cargos}}</span>
+  <span>Total Abonos: {{total_abonos}}</span>
+</div>
+<br>
+<a class="bg-red-500 text-white p-1 rounded-lg mt-5" href="{% url 'logout' %}">Cerrar Sesión</a>
+{% endblock %}
