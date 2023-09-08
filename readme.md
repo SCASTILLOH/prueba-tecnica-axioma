@@ -35,8 +35,9 @@ home: http://127.0.0.1:8000/
 - Redirige al login si harcodea url un usuario no autorizado
 - Cuenta con pagina administrador (django admin)
 - El administrador crea cuentas de usuario
+- El numero de cuenta se crea por medio de signals
 - El administrador crea cargos, abonos, saldos, estado
-- El saldo contable y disponible se actualiza segun cargos y abonos
+- El saldo contable y disponible se actualiza segun cargos y abonos, al grabar usuario
 - El comportamiento de saldos es real a un banco como retenciones y disponible
 - Soporta sobregiro
 - Linea de credito no tiene funcionalidad más que crearla 
