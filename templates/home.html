@@ -23,7 +23,7 @@
       <div>
         Bienvenido :
         <span class="user">
-          Sebastian Castillo
+          {{user.get_full_name}}
         </span>
       </div>
       <a class="button button--blue" href="{% url 'logout' %}"> Cerrar sesión </a>
