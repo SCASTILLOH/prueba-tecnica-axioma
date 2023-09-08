@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
+
+// Estilos generales
+$primary-color: #3498db;
+$background-color: #f2f2f2;
+$form-background-color: #fff;
+$form-border-color: #ddd;
+$form-padding: 10px 35px;
+$header-height: 90px;
+$footer-height: auto;
+$min-content-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+html {
+  font-size: 100%;
+  box-sizing: border-box;
+
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-layout {
+  display: grid;
+  grid-template-rows: $header-height 1fr $footer-height;
+  height: 100vh;
+}
+
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+
+}
+
+
+
+header {
+  background-color: white;
+  color: #fff;
+
+  .header-items {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 40px;
+    justify-content: space-between;
+    height: $header-height;
+    padding-bottom: 1rem;
+  }
+}
+
+.advice {
+  display: grid;
+  grid-template-columns: repeat(1fr, 3);
+  width: 100%;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  padding: 1.2rem 5rem;
+  font-size: 11px;
+
+  div {
+    max-width: 1200px;
+    display: flex;
+    margin: 0 auto;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: .2rem 2rem;
+  }
+}
+
+footer {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background-color: #F1F1F3;
+  font-size: 11px;
+  height: $footer-height;
+  color: #666668;
+
+
+
+  .footer-details {
+    display: grid;
+    grid-template-columns: 240px 1fr 2fr;
+    align-items: center;
+    font-size: 11px;
+    line-height: 16px;
+    // gap: 1rem;
+
+    div {
+      height: 100%;
+      width: 100%;
+      padding: 2rem;
+    }
+  }
+}
+
+
+.content {
+  width: 400px;
+  max-width: 400px;
+
+}
+
+.logo {
+  width: 220px;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+
+  }
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -9;
+  height: 100%;
+  overflow: hidden;
+
+
+  img {
+    object-fit: cover;
+    height: 130%;
+    width: 100%;
+  }
+
+}
+
+.login-form {
+  background-color: $form-background-color;
+  padding: $form-padding;
+  text-align: center;
+  margin-top: 100px;
+
+  background: transparent;
+  position: relative;
+  border-bottom: 3px solid #285B9B;
+
+  &::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(10px);
+    opacity: .85;
+    z-index: -1
+  }
+
+
+
+  .forgot-pass {
+    text-align: left;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    text-decoration: none;
+    color: #06174d;
+    font-size: 14px;
+    font-family: sans-serif;
+  }
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 30px;
+    font-weight: lighter !important;
+    color: #0F3A87;
+
+    span {
+      font-weight: 500;
+
+    }
+  }
+
+  .form-group {
+    text-align: left;
+    margin-bottom: 15px;
+
+
+    .form-control {
+      position: relative;
+    }
+
+    .error-message {
+      margin: 0;
+      margin-top: 3px;
+      font-size: 13px;
+      color: rgb(255, 83, 83);
+      letter-spacing: .3px;
+    }
+
+
+    i {
+      left: 15px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgb(212, 212, 212);
+      transition: color 0.3s;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 13px;
+      padding-left: 2.5rem;
+      border: 1px solid $form-border-color;
+      border-radius: 5px;
+      font-size: 16px;
+      outline: none;
+
+      &::placeholder {
+        color: rgb(177, 177, 177);
+        font-size: 15px;
+        font-style: italic;
+      }
+    }
+
+
+  }
+
+  button {
+    backdrop-filter: blur(10px);
+    background-color: #87B949;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    outline: none;
+
+    &:hover {
+      background-color: darken(#87B949, 8%);
+    }
+  }
+}
+
+.border-left {
+  border-left: 1px solid rgb(211, 211, 211);
+}

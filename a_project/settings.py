@@ -26,8 +26,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "django.contrib.humanize",
+    "crispy_bootstrap4",
+
+    "crispy_forms",
 
     "users",
 ]
@@ -121,5 +123,6 @@ AUTH_USER_MODEL = 'users.UserAccount'
 
 LOGIN_URL = '/login/'
 
-
 MAX_INTENTOS_FALLIDOS = 3
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

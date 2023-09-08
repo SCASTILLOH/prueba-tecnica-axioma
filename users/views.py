@@ -7,51 +7,62 @@ from django.contrib.auth import logout
 from django.utils import timezone
 from django.db.models.functions import Coalesce
 from django.db.models import Sum
+from .forms import LoginForm
 
 
 def login_view(request):
     if request.method == 'POST':
-        rut = request.POST['rut']
-        password = request.POST['password']
+        form = LoginForm(request.POST)
 
-        if not rut or not password:
-            if not rut:
-                messages.error(request, 'El campo Rut no puede estar vacío')
-            if not password:
+        print('form data', request.POST)
+        if form.is_valid():
+            print('form valid')
+            rut = form.cleaned_data['rut']
+            password = form.cleaned_data['password']
+
+            # if not rut or not password:
+            #     if not rut:
+            #         messages.error(
+            #             request, 'El campo Rut no puede estar vacío')
+            #     if not password:
+            #         messages.error(
+            #             request, 'El campo Contraseña no puede estar vacío')
+            #     return render(request, 'login.html')
+
+            user = authenticate(request, rut=rut, password=password)
+
+            if user and user.estado == 'bloqueado':
                 messages.error(
-                    request, 'El campo Contraseña no puede estar vacío')
-            return render(request, 'login.html')
+                    request, f'Usuario bloqueado, contacte a su administrador')
+                return render(request, 'login.html', {'form': form})
 
-        user = authenticate(request, rut=rut, password=password)
-
-        if user and user.estado == 'bloqueado':
-            messages.error(
-                request, f'Usuario bloqueado, contacte a su administrador')
-            return render(request, 'login.html')
-
-        if user is not None:
-            login(request, user)
-            user.intentos_fallidos = 0
-            user.save()
-            return redirect('/')
-        else:
-            try:
-                user = UserAccount.objects.get(rut=rut)
-
-                user.intentos_fallidos += 1
-                if user.intentos_fallidos >= 3:
-                    user.estado = 'bloqueado'
-                    messages.error(
-                        request, f'Demasiados intentos fallidos, contacte a su administrador')
+            if user is not None:
+                login(request, user)
+                user.estado = 'activo'
+                user.intentos_fallidos = 0
                 user.save()
-                messages.error(
-                    request, f'Credenciales inválidas')
-            except UserAccount.DoesNotExist:
-                messages.error(request, 'El usuario no existe')
+                return redirect('/')
+            else:
+                try:
+                    user = UserAccount.objects.get(rut=rut)
 
-        print('user data: ', UserAccount.objects.filter(rut=rut).values())
+                    user.intentos_fallidos += 1
+                    if user.intentos_fallidos >= 3:
+                        user.estado = 'bloqueado'
+                        messages.error(
+                            request, f'Demasiados intentos fallidos, contacte a su administrador')
+                    else:
+                        messages.error(
+                            request, f'Los datos ingresados no son correctos. Recuerda que al tercer intento fallido tu clave será bloqueada. Por favor intenta nuevamente.')
+                    user.save()
+                except UserAccount.DoesNotExist:
+                    messages.error(request, 'El usuario no existe')
 
-    return render(request, 'login.html')
+            print('user data: ', UserAccount.objects.filter(rut=rut).values())
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
 
 
 @login_required(login_url='/login/')

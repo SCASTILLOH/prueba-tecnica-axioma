@@ -1,34 +1,112 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
-<div class="max-w-xs mx-auto mt-8">
-  {% if messages %}
-  <ul class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  <form method="post" class="p-4 bg-white shadow-md rounded-lg" novalidate>
-    {% csrf_token %}
-    <div class="mb-4">
-      <label for="rut" class="block text-gray-700 text-sm font-bold mb-2">Rut:</label>
-      <input type="text" id="rut" name="rut" required
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+<div class="page-layout">
+  <header>
+    <div class="container">
+      <div class="header-items">
+        <div class="logo logoA">
+          <img src="{% static '/images/logo-bco-chile.png' %}" alt="">
+        </div>
+        <div class="logo logoB">
+          <img src="{% static '/images/logo-2-bco-chile.png' %}" alt="">
+        </div>
+      </div>
     </div>
+  </header>
+  <div class="container">
+    <section class="content">
+      <div class="bg">
+        <img src="{% static '/images/bg-login.jpg' %}" alt="imagen banco chile">
+      </div>
+      <div class="login-form">
+        <h2>Bienvenido a nuestro Portal <br>
+          Personas <span>Banco en Línea</span></h2>
+        <form method="POST" novalidate>
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="form-control">
+              <i class="fas fa-user"></i>
+              {{ form.rut }}
+            </div>
 
-    <div class="mb-6">
-      <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
-      <input type="password" id="password" name="password" required
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-    </div>
+            <div class="error-message">{{ form.rut.errors }}</div>
+          </div>
+          <div class="form-group">
+            <div class="form-control">
+              <i class="fas fa-lock"></i>
+              {{ form.password }}
+            </div>
+            <!-- <div class="error-message">Los datos ingresados no son correctos. Recuerda que al tercer intento fallido tu
+              clave será bloqueada. Por favor intenta nuevamente.</div> -->
+            <div class="error-message">{{ form.password.errors }}</div>
+            {% for message in messages %}
+            <p class="error-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+          <button type="submit">Ingresar</button>
+        </form>
+        <a href="#" class="forgot-pass">
+          <svg width="10" height="15" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.25 1.5L8.75 9L1.25 16.5" stroke="black" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
 
-    <div class="text-center">
-      <button type="submit"
-        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-        Iniciar Sesión
-      </button>
+          Olvido la clave</a>
+      </div>
+    </section>
+  </div>
+  <div class="advice">
+    <div>
+      <div>
+        <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M14.36 12C14.44 11.34 14.5 10.68 14.5 10C14.5 9.32 14.44 8.66 14.36 8H17.74C17.9 8.64 18 9.31 18 10C18 10.69 17.9 11.36 17.74 12M12.59 17.56C13.19 16.45 13.65 15.25 13.97 14H16.92C15.9512 15.6683 14.4141 16.932 12.59 17.56ZM12.34 12H7.66C7.56 11.34 7.5 10.68 7.5 10C7.5 9.32 7.56 8.65 7.66 8H12.34C12.43 8.65 12.5 9.32 12.5 10C12.5 10.68 12.43 11.34 12.34 12ZM10 17.96C9.17 16.76 8.5 15.43 8.09 14H11.91C11.5 15.43 10.83 16.76 10 17.96ZM6 6H3.08C4.03886 4.32721 5.5748 3.06149 7.4 2.44C6.8 3.55 6.35 4.75 6 6ZM3.08 14H6C6.35 15.25 6.8 16.45 7.4 17.56C5.57862 16.9317 4.04485 15.6677 3.08 14ZM2.26 12C2.1 11.36 2 10.69 2 10C2 9.31 2.1 8.64 2.26 8H5.64C5.56 8.66 5.5 9.32 5.5 10C5.5 10.68 5.56 11.34 5.64 12M10 2.03C10.83 3.23 11.5 4.57 11.91 6H8.09C8.5 4.57 9.17 3.23 10 2.03ZM16.92 6H13.97C13.657 4.76146 13.1936 3.5659 12.59 2.44C14.43 3.07 15.96 4.34 16.92 6ZM10 0C4.47 0 0 4.5 0 10C0 12.6522 1.05357 15.1957 2.92893 17.0711C3.85752 17.9997 4.95991 18.7362 6.17317 19.2388C7.38642 19.7413 8.68678 20 10 20C12.6522 20 15.1957 18.9464 17.0711 17.0711C18.9464 15.1957 20 12.6522 20 10C20 8.68678 19.7413 7.38642 19.2388 6.17317C18.7362 4.95991 17.9997 3.85752 17.0711 2.92893C16.1425 2.00035 15.0401 1.26375 13.8268 0.761205C12.6136 0.258658 11.3132 0 10 0Z"
+            fill="#A6A1A1" />
+        </svg>
+
+        Por tu seguridad, verifica que la URL de bancochile.cl comience con https://
+      </div>
+      <div>
+        <svg width="24" height="24" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M8 16C7.46957 16 6.96086 15.7893 6.58579 15.4142C6.21071 15.0391 6 14.5304 6 14C6 12.89 6.89 12 8 12C8.53043 12 9.03914 12.2107 9.41421 12.5858C9.78929 12.9609 10 13.4696 10 14C10 14.5304 9.78929 15.0391 9.41421 15.4142C9.03914 15.7893 8.53043 16 8 16ZM14 19V9H2V19H14ZM14 7C14.5304 7 15.0391 7.21071 15.4142 7.58579C15.7893 7.96086 16 8.46957 16 9V19C16 19.5304 15.7893 20.0391 15.4142 20.4142C15.0391 20.7893 14.5304 21 14 21H2C1.46957 21 0.960859 20.7893 0.585786 20.4142C0.210714 20.0391 0 19.5304 0 19V9C0 7.89 0.89 7 2 7H3V5C3 3.67392 3.52678 2.40215 4.46447 1.46447C5.40215 0.526784 6.67392 0 8 0C8.65661 0 9.30679 0.129329 9.91342 0.380602C10.52 0.631876 11.0712 1.00017 11.5355 1.46447C11.9998 1.92876 12.3681 2.47995 12.6194 3.08658C12.8707 3.69321 13 4.34339 13 5V7H14ZM8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5V7H11V5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2Z"
+            fill="#A6A1A1" />
+        </svg>
+        Accede al sitio del banco escribiendo directamente la dirección en tu navegador. Nunca entres a través de
+        links.
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2 16C1.45 16 0.979002 15.804 0.587002 15.412C0.195002 15.02 -0.000664969 14.5493 1.69779e-06 14V2C1.69779e-06 1.45 0.196002 0.979002 0.588002 0.587002C0.980002 0.195002 1.45067 -0.000664969 2 1.69779e-06H18C18.55 1.69779e-06 19.021 0.196001 19.413 0.588001C19.805 0.980001 20.0007 1.45067 20 2V14C20 14.55 19.804 15.021 19.412 15.413C19.02 15.805 18.5493 16.0007 18 16H2ZM10 9L2 4V14H18V4L10 9ZM10 7L18 2H2L10 7ZM2 4V2V14V4Z"
+            fill="#A6A1A1" />
+        </svg>
+
+        Verifica siempre la fuente de tus correos; atento a premios y mensajes extraños.
+      </div>
     </div>
-  </form>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="footer-details">
+        <div class="logo logoB">
+          <img src="{% static '/images/logo-bco-chile-gris.png' %}" alt="">
+        </div>
+        <div class="border-left">
+          Casa Matriz: Ahumada 251, Santiago de Chile <br>
+          Mesa Central: [+56 2] 2653 1111<br>
+          Fonobank 600 637 3737<br>
+        </div>
+        <div class="border-left">Infórmese sobre la garantía estatal de los depósitos en su banco o en www.sbif.cl
+          Citi y el diseño del arco es una marca de servicio registrada de Citigroup Inc. Uso bajo licencia
+          <br>© 2023, Banco de Chile. Todos los Derechos Reservados
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 {% endblock %}
