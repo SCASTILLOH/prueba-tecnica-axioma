@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% load humanize %}
+
 
 {% block content %}
 <div>Bienvenido {{user}}</div>
-<div>
-  <span>Saldo disponible: {{saldo_disponible}}</span>
+<br>
+<div class="flex flex-col gap-2">
+  <span>Saldo disponible: {{saldo_disponible | intcomma}}</span>
+  <span>Saldo contable: {{saldo_contable}}</span>
   <span>Total Cargos: {{total_cargos}}</span>
   <span>Total Abonos: {{total_abonos}}</span>
 </div>

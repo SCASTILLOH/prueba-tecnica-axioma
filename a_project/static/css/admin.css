@@ -1,0 +1,38 @@
+/* -------------------------------------------------------------------------- */
+/*                                   CUSTOM                                   */
+/* -------------------------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap");
+
+/* #container {
+  min-width: 1300px !important;
+} */
+
+#content {
+  position: relative !important;
+}
+
+.cke_editable p {
+  color: #3482ff !important;
+}
+
+.selector-chosen h2 {
+  background-color: #0088ff !important;
+}
+
+#header {
+  background-color: rgb(45, 52, 66);
+}
+
+.breadcrumbs {
+  background-color: rgb(37, 42, 52) !important;
+}
+
+.login #login-form {
+  max-width: 400px;
+}
+
+#login-form .submit-row input {
+  width: 100%;
+  background-color: rgb(45, 52, 66);
+  ;
+}

@@ -47,11 +47,15 @@ def home_view(request):
     total_cargos = Cargos.objects.filter(cuenta=user_data).aggregate(
         total=models.Sum('monto'))['total']
 
+    def format_number(text):
+        return '{:,}'.format(text).replace(',', '.')
+
     context = {
         'user': user_data,
-        'total_abonos': total_abonos,
-        'total_cargos': total_cargos,
-        'saldo_disponible': user_data.saldo_disponible
+        'total_abonos': format_number(total_abonos),
+        'total_cargos': format_number(total_cargos),
+        'saldo_disponible': format_number(user_data.saldo_disponible),
+        'saldo_contable': format_number(user_data.saldo_contable),
     }
 
     return render(request, 'home.html', context)
