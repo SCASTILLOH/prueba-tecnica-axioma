@@ -60,7 +60,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=255)
     apellidos = models.CharField(max_length=255)
     email = models.EmailField(unique=True, max_length=255)
-    numero_cuenta = models.IntegerField(unique=True, default=0)
+    numero_cuenta = models.CharField(unique=True, max_length=10)
     saldo_contable = models.IntegerField(default=0)
     saldo_disponible = models.IntegerField(default=0)
     saldo_linea_credito = models.IntegerField(default=0)
@@ -137,8 +137,12 @@ class Abonos(models.Model):
 @receiver(pre_save, sender=UserAccount)
 def random_cuenta_corriente(sender, instance, **kwargs):
     if not instance.numero_cuenta:
-        numero_random = str(random.randint(10000, 99999))
-        instance.numero_cuenta = numero_random
+        while True:
+            numero_random = '80-{:03d}-{:02d}'.format(
+                random.randint(0, 999), random.randint(0, 99))
+            if not UserAccount.objects.filter(numero_cuenta=numero_random).exists():
+                instance.numero_cuenta = numero_random
+                break
 
 
 @receiver(post_save, sender=UserAccount)
