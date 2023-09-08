@@ -60,15 +60,9 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
         rut = cleaned_data.get('rut')
         password = cleaned_data.get('password')
-        print(rut, password)
 
         if not rut or not password:
             raise forms.ValidationError('Ambos campos son obligatorios.')
-
-        # user = authenticate(username=rut, password=password)
-        # if user is None:
-        #     raise forms.ValidationError('Credenciales incorrectas.')
-
         return cleaned_data
 
     def __init__(self, *args, **kwargs):

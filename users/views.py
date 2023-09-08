@@ -14,9 +14,7 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
-        print('form data', request.POST)
         if form.is_valid():
-            print('form valid')
             rut = form.cleaned_data['rut']
             password = form.cleaned_data['password']
 
