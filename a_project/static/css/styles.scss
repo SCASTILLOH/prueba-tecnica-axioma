@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
 
 // Estilos generales
+$color-primary-blue:#376AFF;
+$color-primary-gray:rgb(106, 106, 106);
+
 $primary-color: #3498db;
 $background-color: #f2f2f2;
 $form-background-color: #fff;
@@ -35,6 +38,11 @@ body {
 
 }
 
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -46,17 +54,10 @@ body {
   height: 100vh;
 }
 
-.errorlist {
-  list-style-type: none;
-  padding: 0;
-
-}
-
-
-
 header {
   background-color: white;
   color: #fff;
+  border-bottom: 1px solid rgb(220, 220, 220);
 
   .header-items {
     display: flex;
@@ -215,8 +216,7 @@ footer {
       margin: 0;
       margin-top: 3px;
       font-size: 13px;
-      color: rgb(255, 83, 83);
-      letter-spacing: .3px;
+      color: red;
     }
 
 
@@ -268,6 +268,7 @@ footer {
     width: 100%;
     outline: none;
 
+
     &:hover {
       background-color: darken(#87B949, 8%);
     }
@@ -276,4 +277,207 @@ footer {
 
 .border-left {
   border-left: 1px solid rgb(211, 211, 211);
+}
+
+
+.button {
+
+  color: white;
+  padding: .5rem 1.3rem;
+  border-radius: 30px;
+  transition: background .1s ease;
+  text-decoration: none;
+  height: fit-content;
+
+  &--blue {
+    background-color: $color-primary-blue;
+
+    &:hover {
+      background: darken($color: $color-primary-blue, $amount: 5);
+    }
+  }
+
+  &--white {
+    background-color: white;
+    color: $color-primary-blue;
+    font-weight: 500;
+    letter-spacing: .3px;
+    border: 1px solid rgba(0, 0, 255, 0.386);
+  }
+
+  &--sm {
+    font-size: 14px;
+  }
+
+}
+
+
+.cartola-section {
+  max-width: 62em;
+  margin: 0 auto;
+
+  .welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 0;
+  }
+
+  .user {
+    font-weight: 600;
+    color: $color-primary-blue;
+  }
+
+  .cuenta-data {
+    margin: 1.5rem 0;
+
+    &__details {
+      color: $color-primary-gray;
+    }
+
+    h3 {
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: .5rem;
+    }
+  }
+
+  .menu_link {
+    display: flex;
+    gap: 3rem;
+    padding: 1rem 2rem;
+    margin-bottom: .5rem;
+    cursor: pointer;
+    color: $color-primary-gray;
+
+    .link-active {
+      color: $color-primary-blue;
+      border-bottom: 2px solid $color-primary-blue;
+      padding-bottom: .5rem;
+    }
+  }
+}
+
+.cartola-info {
+  background: #F5F7FF;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  border: 1px solid #3769ff33;
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .saldos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+
+      .saldo_monto {
+        font-weight: bold;
+        font-size: 1.1rem;
+
+        color: $color-primary-blue;
+
+        small {
+          font-weight: bold;
+          font-size: 1.1rem;
+          color: $color-primary-blue;
+        }
+
+
+      }
+    }
+
+    .montos {
+      margin-bottom: 2rem;
+    }
+
+  }
+}
+
+.totales {
+  .item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: .3rem 0;
+
+    span {
+      font-size: 15px;
+    }
+  }
+}
+
+.simula-credito {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  background: #376AFF;
+  color: white;
+  padding: .5rem 2rem;
+  border-radius: 15px;
+  font-size: 14px;
+
+  a {
+    display: flex;
+    color: white !important;
+    border-bottom: 2px solid white;
+    height: fit-content;
+  }
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.link {
+  color: $color-primary-blue;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid $color-primary-blue;
+  cursor: pointer;
+
+  &--sm {
+    font-size: 12px;
+  }
+
+  &:visited {
+    color: $color-primary-blue;
+    /* Cambia el color para los hipervínculos visitados */
+  }
+}
+
+.grid-2 {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.flex {
+  display: flex;
+}
+
+.text-gray {
+  color: $color-primary-gray;
+}
+
+.text-right {
+  text-align: right;
+}
+
+a {
+  text-decoration: none;
 }

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap");
 html,
 body {
@@ -22,6 +23,11 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -33,14 +39,10 @@ body {
   height: 100vh;
 }
 
-.errorlist {
-  list-style-type: none;
-  padding: 0;
-}
-
 header {
   background-color: white;
   color: #fff;
+  border-bottom: 1px solid rgb(220, 220, 220);
 }
 header .header-items {
   display: flex;
@@ -178,8 +180,7 @@ footer .footer-details div {
   margin: 0;
   margin-top: 3px;
   font-size: 13px;
-  color: rgb(255, 83, 83);
-  letter-spacing: 0.3px;
+  color: red;
 }
 .login-form .form-group i {
   left: 15px;
@@ -240,4 +241,180 @@ footer .footer-details div {
 
 .border-left {
   border-left: 1px solid rgb(211, 211, 211);
-}/*# sourceMappingURL=login.css.map */
+}
+
+.button {
+  color: white;
+  padding: 0.5rem 1.3rem;
+  border-radius: 30px;
+  transition: background 0.1s ease;
+  text-decoration: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.button--blue {
+  background-color: #376AFF;
+}
+.button--blue:hover {
+  background: #1e57ff;
+}
+.button--white {
+  background-color: white;
+  color: #376AFF;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(0, 0, 255, 0.386);
+}
+.button--sm {
+  font-size: 14px;
+}
+
+.cartola-section {
+  max-width: 62em;
+  margin: 0 auto;
+}
+.cartola-section .welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 0;
+}
+.cartola-section .user {
+  font-weight: 600;
+  color: #376AFF;
+}
+.cartola-section .cuenta-data {
+  margin: 1.5rem 0;
+}
+.cartola-section .cuenta-data__details {
+  color: rgb(106, 106, 106);
+}
+.cartola-section .cuenta-data h3 {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+.cartola-section .menu_link {
+  display: flex;
+  gap: 3rem;
+  padding: 1rem 2rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  color: rgb(106, 106, 106);
+}
+.cartola-section .menu_link .link-active {
+  color: #376AFF;
+  border-bottom: 2px solid #376AFF;
+  padding-bottom: 0.5rem;
+}
+
+.cartola-info {
+  background: #F5F7FF;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(55, 105, 255, 0.2);
+}
+.cartola-info .title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.cartola-info .saldos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.cartola-info .saldos .item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.cartola-info .saldos .item .saldo_monto {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #376AFF;
+}
+.cartola-info .saldos .item .saldo_monto small {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #376AFF;
+}
+.cartola-info .saldos .montos {
+  margin-bottom: 2rem;
+}
+
+.totales .item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0.3rem 0;
+}
+.totales .item span {
+  font-size: 15px;
+}
+
+.simula-credito {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  background: #376AFF;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 15px;
+  font-size: 14px;
+}
+.simula-credito a {
+  display: flex;
+  color: white !important;
+  border-bottom: 2px solid white;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link {
+  color: #376AFF;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #376AFF;
+  cursor: pointer;
+}
+.link--sm {
+  font-size: 12px;
+}
+.link:visited {
+  color: #376AFF;
+  /* Cambia el color para los hipervínculos visitados */
+}
+
+.grid-2 {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.flex {
+  display: flex;
+}
+
+.text-gray {
+  color: rgb(106, 106, 106);
+}
+
+.text-right {
+  text-align: right;
+}
+
+a {
+  text-decoration: none;
+}/*# sourceMappingURL=styles.css.map */

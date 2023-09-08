@@ -1,16 +1,149 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+{% load static %}
+
 
 {% block content %}
-<div>Bienvenido {{user}}</div>
-<br>
-<div class="flex flex-col gap-2">
-  <span>Saldo disponible: {{saldo_disponible | intcomma}}</span>
-  <span>Saldo contable: {{saldo_contable}}</span>
-  <span>Total Cargos: {{total_cargos}}</span>
-  <span>Total Abonos: {{total_abonos}}</span>
-</div>
-<br>
-<a class="bg-red-500 text-white p-1 rounded-lg mt-5" href="{% url 'logout' %}">Cerrar Sesión</a>
+<header>
+  <div class="container">
+    <div class="header-items">
+      <div class="logo logoA">
+        <img src="{% static '/images/logo-bco-chile.png' %}" alt="logo">
+      </div>
+      <div class="logo logoB">
+        <img src="{% static '/images/logo-2-bco-chile.png' %}" alt="logo">
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="cartola-section">
+    <div class="welcome">
+      <div>
+        Bienvenido :
+        <span class="user">
+          Sebastian Castillo
+        </span>
+      </div>
+      <a class="button button--blue" href="{% url 'logout' %}"> Cerrar sesión </a>
+    </div>
+    <hr />
+
+    <div class="cuenta-data">
+      <h3>Consultar Cuentas</h3>
+      <div class="cuenta-data__details">
+        <div class="cell">
+          Cuenta N°
+          <strong>323232-565 (CLP)</strong>
+          <div class="link link--sm">
+            <span class="cell">
+              <span>SELECCIONA OTRA CUENTA</span>
+              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M1.20999 10.77C1.07216 10.6267 0.996848 10.4346 1.0006 10.2359C1.00435 10.0371 1.08686 9.84797 1.22999 9.71001L5.16799 6.00001L1.22999 2.29001C1.15565 2.22257 1.0956 2.1409 1.0534 2.04983C1.01119 1.95875 0.987704 1.86014 0.984314 1.75982C0.980925 1.65951 0.997706 1.55953 1.03366 1.46582C1.06962 1.37211 1.12402 1.28657 1.19365 1.21427C1.26327 1.14196 1.3467 1.08437 1.43899 1.04491C1.53127 1.00544 1.63055 0.9849 1.73092 0.984503C1.83129 0.984106 1.93072 1.00386 2.02332 1.0426C2.11592 1.08133 2.1998 1.13826 2.26999 1.21001L6.76999 5.46001C6.84258 5.52997 6.90032 5.61385 6.93975 5.70663C6.97919 5.79941 6.99951 5.89919 6.99951 6.00001C6.99951 6.10082 6.97919 6.2006 6.93975 6.29338C6.90032 6.38617 6.84258 6.47004 6.76999 6.54001L2.26999 10.79C2.12674 10.9278 1.93462 11.0032 1.73585 10.9994C1.53709 10.9957 1.34795 10.9131 1.20999 10.77Z"
+                  fill="#376AFF" />
+              </svg>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="menu_link">
+        <div class="link-active">
+          Saldo y movimientos
+        </div>
+        <div>Cartola histórica</div>
+        <div>Cartola de intereses</div>
+      </div>
+      <div class=" cartola-info">
+        <div class="title">
+          <p class="cell">
+            Saldos al 07/09/2023 15:33hrs
+            <img width="13" src="{% static '/images/question.png' %}" alt="question">
+          </p>
+          <a class="button button--white button--sm" href="#"> LIQUIDACIÓN DE INTERESES </a>
+          <!-- <button class="button button--white button--sm">LIQUIDACIÓN DE INTERESES </button> -->
+        </div>
+        <div class="saldos">
+          <div class="item">
+            <span class="cell text-gray">
+              Saldo disponible Cuenta Corriente
+              <img width="13" src="{% static '/images/question.png' %}" alt="question">
+            </span>
+            <div class="saldo_monto">
+              <small>$</small>
+              <span>1.500.599</span>
+            </div>
+          </div>
+          <div class="item">
+            <span class="cell text-gray">
+              Saldo disponible Línea de Crédito
+              <img width="13" src="{% static '/images/question.png' %}" alt="question">
+            </span>
+            <div class="saldo_monto">
+              <small>$</small>
+              <span>10.000.000</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="grid-2 totales">
+          <div>
+            <div class="item">
+              <span class="cell text-gray">
+                Saldo contable
+                <img width="13" src="{% static '/images/question.png' %}" alt="question">
+              </span>
+              <span class="text-right">$ 0</span>
+            </div>
+            <div class="item">
+              <span class="cell text-gray">
+                Retención 24H
+                <img width="13" src="{% static '/images/question.png' %}" alt="question">
+              </span>
+              <span class="text-right">$ 0</span>
+            </div>
+            <div class="item">
+              <span class="cell text-gray">
+                Retención 48H
+                <img width="13" src="{% static '/images/question.png' %}" alt="question">
+              </span>
+              <span class="text-right">$ 0</span>
+            </div>
+
+          </div>
+          <div>
+            <div class="item">
+              <span class="cell text-gray">
+                Total cargos
+                <img width="13" src="{% static '/images/question.png' %}" alt="question">
+              </span>
+              <span class="text-right">$ 0</span>
+            </div>
+            <div class="item">
+              <span class="cell text-gray">
+                Total abonos
+                <img width="13" src="{% static '/images/question.png' %}" alt="question">
+              </span>
+              <span class="text-right">$ 0</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="simula-credito">
+          <p className="flex-1">
+            Tienes un crédito de consumo preaprobado por $14.450.000, con
+            abono inmediato en tu cuenta corriente
+          </p>
+          <a class="link" href="#">
+            SIMULA AQUI
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 {% endblock %}
