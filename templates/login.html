@@ -40,8 +40,6 @@
               <i class="fas fa-lock"></i>
               {{ form.password }}
             </div>
-            <!-- <div class="error-message">Los datos ingresados no son correctos. Recuerda que al tercer intento fallido tu
-              clave será bloqueada. Por favor intenta nuevamente.</div> -->
             <div class="error-message">{{ form.password.errors }}</div>
             {% for message in messages %}
             <p class="error-message">{{ message }}</p>
