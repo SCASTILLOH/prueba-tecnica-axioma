@@ -9,7 +9,7 @@
     {% endfor %}
   </ul>
   {% endif %}
-  <form method="post" class="p-4 bg-white shadow-md rounded-lg">
+  <form method="post" class="p-4 bg-white shadow-md rounded-lg" novalidate>
     {% csrf_token %}
     <div class="mb-4">
       <label for="rut" class="block text-gray-700 text-sm font-bold mb-2">Rut:</label>

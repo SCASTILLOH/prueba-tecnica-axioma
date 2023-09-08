@@ -14,7 +14,20 @@ def login_view(request):
         rut = request.POST['rut']
         password = request.POST['password']
 
+        if not rut or not password:
+            if not rut:
+                messages.error(request, 'El campo Rut no puede estar vacío')
+            if not password:
+                messages.error(
+                    request, 'El campo Contraseña no puede estar vacío')
+            return render(request, 'login.html')
+
         user = authenticate(request, rut=rut, password=password)
+
+        if user and user.estado == 'bloqueado':
+            messages.error(
+                request, f'Usuario bloqueado, contacte a su administrador')
+            return render(request, 'login.html')
 
         if user is not None:
             login(request, user)
@@ -24,11 +37,15 @@ def login_view(request):
         else:
             try:
                 user = UserAccount.objects.get(rut=rut)
+
                 user.intentos_fallidos += 1
-                if user.intentos_fallidos >= 4:
+                if user.intentos_fallidos >= 3:
                     user.estado = 'bloqueado'
+                    messages.error(
+                        request, f'Demasiados intentos fallidos, contacte a su administrador')
                 user.save()
-                messages.error(request, 'Credenciales inválidas')
+                messages.error(
+                    request, f'Credenciales inválidas')
             except UserAccount.DoesNotExist:
                 messages.error(request, 'El usuario no existe')
 

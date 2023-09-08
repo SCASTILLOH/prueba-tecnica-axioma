@@ -30,7 +30,8 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Información Personal', {'fields': ('nombres', 'apellidos')}),
         ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Información de Cuenta', {'fields': (
-            'numero_cuenta', 'saldo_contable', 'saldo_disponible', 'saldo_linea_credito', 'estado')}),
+            'numero_cuenta', 'saldo_contable', 'saldo_disponible',
+            'saldo_linea_credito', 'estado', 'intentos_fallidos')}),
     )
     add_fieldsets = (
         (None, {

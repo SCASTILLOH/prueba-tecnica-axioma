@@ -141,24 +141,8 @@ def random_cuenta_corriente(sender, instance, **kwargs):
         instance.numero_cuenta = numero_random
 
 
-# @receiver(post_save, sender=Cargos)
-# def actualizar_saldo_disponible(sender, instance, **kwargs):
-#     suma_cargos = Cargos.objects.filter(cuenta=instance.cuenta).aggregate(
-#         total=models.Sum('monto'))['total']
-
-#     instance.cuenta.saldo_disponible = instance.cuenta.saldo_contable - suma_cargos
-#     instance.cuenta.save()
-
-
-# @receiver(post_save, sender=Abonos)
-# def actualizar_saldo_disponible(sender, instance, **kwargs):
-#     suma_abonos_sin_retencion = Abonos.objects.filter(cuenta=instance.cuenta, retencion=False).aggregate(
-#         total=Coalesce(Sum('monto'), 0))['total']
-
-#     suma_abonos_con_retencion = Abonos.objects.filter(cuenta=instance.cuenta, retencion=True).aggregate(
-#         total=models.Sum('monto'))['total']
-
-#     print('suma_abonos_sin_retencion ', suma_abonos_sin_retencion)
-#     print('suma_abonos_con_retencion ', suma_abonos_con_retencion)
-#     instance.cuenta.saldo_disponible += suma_abonos_sin_retencion
-#     instance.cuenta.save()
+@receiver(post_save, sender=UserAccount)
+def valida_estado(sender, instance, **kwargs):
+    if instance.estado == 'activo' and instance.intentos_fallidos >= 3:
+        instance.intentos_fallidos = 0
+        instance.save()
